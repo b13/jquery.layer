@@ -1,0 +1,45 @@
+HTML setup to use the layer plugin:
+
+<div class="" data-layerbox="open" data-layercontenturl="url"></div>
+
+
+
+JS setup (jquery and require-js are needed):
+
+B.layer = {
+	settings: {
+		$openLayer: $('[data-layerbox="open"]')
+	}
+	,initialize: function() {
+		var me = this;
+		
+		if (me.settings.$openLayer == 0) { return };
+		
+		require(['layer'], function() {
+			me.settings.$openLayer.layer();
+			me.events();
+		});
+		
+			// hooks
+		me.settings.$openLayer.on('open', function() {
+			console.log("open layer");
+		});
+		me.settings.$openLayer.on('opened', function() {
+			console.log("layer is opened");
+		});
+		me.settings.$openLayer.on('close', function() {
+			console.log("close layer");
+		});
+		me.settings.$openLayer.on('closed', function() {
+			console.log("layer closed");
+		});
+		
+	}
+	,events: function() {
+		var me = this;
+		
+		me.settings.$openLayer.on('click', function() {
+			$(this).layer("open");
+		});
+	}
+}
